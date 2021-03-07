@@ -1,27 +1,24 @@
 <template>
-  <div class="weather-wrap" v-if="typeof weather.main != 'undefined'">
-    <div class="location-box">
-      <table id="currentWeatherTable">
-        <tr>
-          <td colspan="2" class="date">{{ getDate() }}</td>
-        </tr>
-        <tr>
-          <td colspan="2" class="location">
-            {{ weather.name }}, {{ weather.sys.country }}
-          </td>
-        </tr>
-        <tr>
-          <img v-bind:src="iconSrc" />
-          <td class="currentTemp">{{ Math.round(weather.main.temp) }}°C</td>
-        </tr>
-
-        <tr>
-          <td colspan="2" class="currentDescription">
-            {{ weather.weather[0].description }}
-          </td>
-        </tr>
-      </table>
-    </div>
+  <div class="main-container" v-if="typeof weather.main != 'undefined'">
+    <table id="currentWeatherTable">
+      <tr>
+        <td colspan="2" class="date">{{ getDate() }}</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="location">
+          {{ weather.name }}, {{ weather.sys.country }}
+        </td>
+      </tr>
+      <tr>
+        <img v-bind:src="iconSrc" />
+        <td class="currentTemp">{{ Math.round(weather.main.temp) }}°C</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="currentDescription">
+          {{ weather.weather[0].description }}
+        </td>
+      </tr>
+    </table>
   </div>
 </template>
 
@@ -31,7 +28,7 @@ export default {
   data() {
     return {
       api_key: "3709f89e826c2838310e77a773533f2d",
-      url_base: "https://api.openweathermap.org/data/2.5/",
+      url: "https://api.openweathermap.org/data/2.5/",
       weather: "",
       iconSrc: "",
     };
@@ -42,7 +39,7 @@ export default {
   methods: {
     fetchWeather() {
       fetch(
-        `${this.url_base}weather?q=stockholm&units=metric&APPID=${this.api_key}`
+        `${this.url}weather?q=stockholm&units=metric&APPID=${this.api_key}`
       )
         .then((res) => {
           return res.json();
@@ -77,7 +74,7 @@ body {
   text-transform: uppercase;
   font-size: 16px;
 }
-.weather-wrap {
+.main-container {
   color: rgb(233, 247, 252);
   background-color: rgb(0, 0, 94);
   border-radius: 20px;
